@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+httpx
+reportlab
+python-dotenv
+openai
+jinja2
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator
+python-multipart

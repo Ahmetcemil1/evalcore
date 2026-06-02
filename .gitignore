@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+env/
+
+# SQLite DB (contains user data, never push to git)
+*.db
+*.sqlite
+*.sqlite3
+
+# PDF Reports
+report_*.pdf
+
+# Environment files (contains API keys!)
+.env
+.env.local
+.env.production
+
+# Node.js
+node_modules/
+.next/
+out/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
