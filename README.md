@@ -274,6 +274,17 @@ This project is open-source under the **MIT License**. See [LICENSE](LICENSE) fo
 
 ---
 
+## 💖 Support & Donations
+
+If you find EvalCore useful and want to support its ongoing open-source development, you can send donations to the following addresses:
+
+- **Ethereum (ERC-20 / EVM):** `0x9Da009aE0C9366d5944FA041dD43Dc89528DB289`
+- **Bitcoin (Native SegWit):** `bc1qetuu2ehsltezy2t7f7pgr7gl388494cd9duxnd`
+
+Your support helps cover API baseline testing, cloud hosting for public judge benchmarks, and development resources!
+
+---
+
 ## 🙏 Acknowledgements
 
 Built with:
