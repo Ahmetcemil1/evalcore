@@ -46,6 +46,14 @@ interface Summary {
   category_breakdown: Record<string, number>;
 }
 
+// Helper to dynamically get API base URL - supports local network access (e.g. 192.168.1.104)
+const getApiUrl = (path: string): string => {
+  if (typeof window !== "undefined") {
+    return `http://${window.location.hostname}:8000${path}`;
+  }
+  return `http://localhost:8000${path}`;
+};
+
 export default function Home() {
   // Auth state
   const [token, setToken] = useState<string | null>(null);
@@ -62,7 +70,7 @@ export default function Home() {
   const [authRole, setAuthRole] = useState("Software Developer / Engineer");
 
   // Config state
-  const [targetApiUrl, setTargetApiUrl] = useState("http://localhost:8000/api/dataset");
+  const [targetApiUrl, setTargetApiUrl] = useState(() => getApiUrl("/api/dataset"));
   const [targetApiKey, setTargetApiKey] = useState("dummy-key");
   const [targetModelName, setTargetModelName] = useState("gpt-3.5-turbo");
   const [judgeApiKey, setJudgeApiKey] = useState("");
@@ -116,7 +124,7 @@ export default function Home() {
 
     try {
       if (authMode === "SIGNUP") {
-        const response = await fetch("http://localhost:8000/api/auth/signup", {
+        const response = await fetch(getApiUrl("/api/auth/signup"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
@@ -140,7 +148,7 @@ export default function Home() {
         formData.append("username", authEmail);
         formData.append("password", authPassword);
 
-        const response = await fetch("http://localhost:8000/api/auth/login", {
+        const response = await fetch(getApiUrl("/api/auth/login"), {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: formData
@@ -163,7 +171,7 @@ export default function Home() {
 
   const fetchJobsHistory = async (activeToken: string) => {
     try {
-      const response = await fetch("http://localhost:8000/api/audit/jobs", {
+      const response = await fetch(getApiUrl("/api/audit/jobs"), {
         headers: { "Authorization": `Bearer ${activeToken}` }
       });
       if (response.ok) {
@@ -194,7 +202,7 @@ export default function Home() {
     setExpandedRows({});
 
     try {
-      const response = await fetch("http://localhost:8000/api/audit", {
+      const response = await fetch(getApiUrl("/api/audit"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -230,7 +238,7 @@ export default function Home() {
 
     pollingInterval.current = setInterval(async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/audit/jobs/${id}`, {
+        const response = await fetch(getApiUrl(`/api/audit/jobs/${id}`), {
           headers: { "Authorization": `Bearer ${activeToken}` }
         });
         if (!response.ok) throw new Error("Failed to fetch job status.");
@@ -270,7 +278,7 @@ export default function Home() {
     setJobId(id);
     
     try {
-      const response = await fetch(`http://localhost:8000/api/audit/jobs/${id}`, {
+      const response = await fetch(getApiUrl(`/api/audit/jobs/${id}`), {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (!response.ok) throw new Error("Failed to fetch details.");
@@ -665,11 +673,11 @@ export default function Home() {
                   </div>
                   {/* Secure JWT Authorized Report Downloader */}
                   <a 
-                    href={`http://localhost:8000/api/audit/jobs/${jobId}/report?token=${token}`}
+                    href={getApiUrl(`/api/audit/jobs/${jobId}/report?token=${token}`)}
                     onClick={(e) => {
                       e.preventDefault();
                       // Download using JWT authentication
-                      fetch(`http://localhost:8000/api/audit/jobs/${jobId}/report`, {
+                      fetch(getApiUrl(`/api/audit/jobs/${jobId}/report`), {
                         headers: { "Authorization": `Bearer ${token}` }
                       })
                       .then(res => res.blob())
