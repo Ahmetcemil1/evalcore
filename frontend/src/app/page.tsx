@@ -837,7 +837,7 @@ export default function Home() {
                               </td>
                             </tr>
                           )}
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   </tbody>
