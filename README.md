@@ -120,18 +120,33 @@ Visit **http://localhost:3000** in your browser, create an account, and start yo
 
 ---
 
-## 🦙 Running Fully Local (Free, No API Keys)
+## ⚙️ Dual Execution Modes
 
-If you have [Ollama](https://ollama.ai) installed with a model (e.g. `llama3`, `qwen2.5-coder`):
+EvalCore can be configured to run in one of two modes, depending on your budget, privacy needs, and performance preferences:
 
-| Field | Value |
-|---|---|
-| Target API Endpoint | `http://localhost:11434/v1/chat/completions` |
-| Target API Key | `ollama` |
-| Target Model ID | `qwen2.5-coder:14b` (or your model) |
-| Judge API Key | `ollama` |
+### Option A: 100% Offline & Free (Local Mode via Ollama)
+Ideal for developers prioritizing maximum privacy (no data leaves your machine) and zero API costs.
+- **Prerequisite:** Install [Ollama](https://ollama.ai) and pull a model (e.g. `qwen2.5-coder:14b` or `llama3`).
+- **Configuration in Dashboard:**
+  | Field | Value |
+  |---|---|
+  | **Target API Endpoint** | `http://localhost:11434/v1/chat/completions` |
+  | **Target API Authorization Key** | `ollama` |
+  | **Target Model ID** | `qwen2.5-coder:14b` (or your local model) |
+  | **Judge API Key** | `ollama` |
+- **How it works:** When EvalCore detects `"ollama"` as the Judge API Key, it automatically routes all Judge evaluations locally.
 
-EvalCore will automatically detect the `ollama` key and route the Judge LLM to your local instance as well — **completely free, completely private, zero data leaves your machine**.
+### Option B: Cloud APIs (API Mode via OpenAI, Groq, Together AI, etc.)
+Ideal for high-throughput auditing, fast processing, and using state-of-the-art hosted models.
+- **Prerequisite:** Acquire API keys from your preferred cloud providers.
+- **Configuration in Dashboard:**
+  | Field | Value |
+  |---|---|
+  | **Target API Endpoint** | Any OpenAI-compatible endpoint (e.g., `https://api.openai.com/v1/chat/completions`) |
+  | **Target API Authorization Key** | Your target provider's API key |
+  | **Target Model ID** | The cloud model name (e.g., `gpt-4o-mini`, `llama-3.1-70b-versatile`) |
+  | **Judge API Key** | Your OpenAI/Judge API key (used for rating results via GPT models) |
+- **How it works:** Evaluations are distributed to cloud nodes. Processing is significantly faster but subject to API billing.
 
 ---
 
