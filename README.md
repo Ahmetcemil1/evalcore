@@ -2,7 +2,7 @@
 
 > **Open-source, automated adversarial red-teaming platform for Large Language Models (LLMs), built in full alignment with the European Union Artificial Intelligence Act (EU AI Act — Articles 10, 13 & 15).**
 
-![EvalCore Dashboard Mockup](assets/dashboard_mockup.png)
+
 
 ---
 
